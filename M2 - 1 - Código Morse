@@ -1,0 +1,21 @@
+int buzzer =
+int botao =
+int LED =
+
+void setup(){
+pinMode();
+pinMode();
+}
+
+pinMode();
+void loop(){
+if (digitalRead() ==) {
+   digitalWrite();
+   tone();
+}else {
+   digitalWrite();
+   noTone();
+}
+}
+
+/* OUTPUT; INPUT_PULLUP; LOW; HIGH*/
