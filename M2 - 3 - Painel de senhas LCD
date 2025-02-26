@@ -1,0 +1,53 @@
+/* Programa: Painel de Senhas */
+#include <LiquidCrystal.h>
+
+/* Define os pinos do Arduino para a comunicação com o display*/
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+/* Pinos dos botões */
+int botao_BAIXO = 
+int botao_CIMA = 
+int buzzer =
+
+int senha = -1;
+
+void setup() {
+   lcd.begin( , );
+   pinMode();
+   pinMode();
+   pinMode();
+}
+
+chamar(1);
+
+/*Aumenta ou diminui valor da senha*/
+void loop() {
+   if (senha > -1 && digitalRead() == 0) {
+      chamar(1);
+   }
+   if (senha > 0 && digitalRead() == 0) {
+      chamar(2);
+   }
+}
+
+void chamar(int botao){
+   tone(, 262, 250);
+   delay(250);
+   tone(, 2093, 400);
+   delay(400)
+   ;
+   if (botao == ) {
+      senha;
+   }
+
+   if (botao == ) {
+      senha;
+   }
+
+   lcd.clear();
+   lcd.setCursor(); 
+   lcd.print("Painel de Senhas");
+   lcd.setCursor(); 
+   lcd.print("Senha: " + String(senha));
+}
+
