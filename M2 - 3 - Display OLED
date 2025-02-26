@@ -1,39 +1,70 @@
+/*Inclusão das bibliotecas do Adafruit*/
 #include <Adafruit_BusIO_Register.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-/* Variável para
+
 String msg;
-/* Variável para
+/*Cria variável tipo texto*/
 int linha;
-/* Cria o objeto
-Adafruit_SSD1306
-armazenar a mensagem. */
-controlar a linha do display. */
-de controle para o display OLED.
-display(128, 64); */
-/* Início das configurações.
-*/
+/*Variável de número pra linha*/
+Adafruit_SSD1306 display(128, 64); */
+/*Informando tamanho da nossa tela*/
+
 void setup() {
-Serial.begin(9600);
-/* Tempo que o Arduino utilizará para “ler” os caracteres armazena-
-dos na string msg. Se este tempo for curto para a quantidade de carac-
-teres a ser processado, a mensagem será enviada incompleta.
-*/
-Serial.setTimeout(500);
-/* Inicializa o display OLED com o endereço 0x3C. */
-display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-/* Limpa o display.
-*/
-display.clearDisplay();
-tela_inicial();
+   Serial.begin(9600);
+   /* Tempo que o Arduino utilizará para “ler” os caracteres armazena-
+   dos na string msg. Se este tempo for curto para a quantidade de carac-
+   teres a ser processado, a mensagem será enviada incompleta.*/
+   Serial.setTimeout(500);
+   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+   /* Inicializa o display OLED com o endereço 0x3C. */
+   display.clearDisplay();
+   /* Limpa o display.*/
+   tela_inicial();
 }
+
 void loop() {
-/* Verifica dados disponíveis na porta serial.
-if (Serial.available()) {
-/* Lê o próximo caractere da porta serial.
-msg = Serial.readString();
-/* Se o caractere for %, limpa o display.
-if (msg == "%") {
-display.clearDisplay();
-linha = 0;
+   /* Verifica dados disponíveis na porta serial.*/
+   if (Serial.available()) {
+      /* Lê o próximo caractere da porta serial.*/
+      msg = Serial.readString();
+      /* Se o caractere for %, limpa o display.*/
+      if (msg == "%") {
+         display.clearDisplay();
+         linha = 0;
+      }
+      /* Se o caractere for >, pula linha no display.*/
+      else if (msg == ">") {
+         linha += 8;
+      /*Se nada disso acontecer, só posta a mensagem*/
+      }else {
+         display.setCursor(0, linha);
+         display.print(msg);
+      }
+      }
+   display.display();
+}
+   
+   void tela_inicial() {
+      display.drawRect(0, 0, 128, 64, 1);
+      display.drawFastHLine(0, 14, 128, WHITE);
+      display.setTextSize(1);
+      display.setTextColor(WHITE);
+      display.setCursor(4, 4);
+      display.print("ESCREVA SUA MENSAGEM");
+      display.setCursor((128 - 6 * 8) / 2, 20);
+      display.setTextSize(1);
+      display.print("Aten");
+      display.write(135);
+      display.write(97);
+      display.setCursor(70, 20);
+      display.write(126);
+      display.write(111);
+      display.write(19);
+      display.setCursor(4, 30);
+      display.setTextSize(1);
+      display.print(" Utilize o comando % para nova mensagem e > para nova
+      linha.");
+      display.display();
+      linha = 0;
 }
