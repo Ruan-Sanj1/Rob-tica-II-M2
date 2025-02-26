@@ -1,0 +1,39 @@
+#include <Adafruit_BusIO_Register.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+/* Variável para
+String msg;
+/* Variável para
+int linha;
+/* Cria o objeto
+Adafruit_SSD1306
+armazenar a mensagem. */
+controlar a linha do display. */
+de controle para o display OLED.
+display(128, 64); */
+/* Início das configurações.
+*/
+void setup() {
+Serial.begin(9600);
+/* Tempo que o Arduino utilizará para “ler” os caracteres armazena-
+dos na string msg. Se este tempo for curto para a quantidade de carac-
+teres a ser processado, a mensagem será enviada incompleta.
+*/
+Serial.setTimeout(500);
+/* Inicializa o display OLED com o endereço 0x3C. */
+display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+/* Limpa o display.
+*/
+display.clearDisplay();
+tela_inicial();
+}
+void loop() {
+/* Verifica dados disponíveis na porta serial.
+if (Serial.available()) {
+/* Lê o próximo caractere da porta serial.
+msg = Serial.readString();
+/* Se o caractere for %, limpa o display.
+if (msg == "%") {
+display.clearDisplay();
+linha = 0;
+}
