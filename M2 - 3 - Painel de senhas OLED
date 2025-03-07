@@ -67,3 +67,5 @@ void loop() {
     display.display();
     display.clearDisplay();
 }
+
+/*INPUT_PULLUP, OUTPUT*/
