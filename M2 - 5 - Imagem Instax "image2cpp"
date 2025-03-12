@@ -4,8 +4,8 @@
 #include <Adafruit_SSD1306.h>
 
 /*Variáveis de largura e altura*/
-#define larguraDisplay
-#define alturaDisplay 
+#define larguraDisplay 128
+#define alturaDisplay 64
 
 /* Cria o display com o tamanho escolhido. */
 Adafruit_SSD1306 display(larguraDisplay, alturaDisplay);
