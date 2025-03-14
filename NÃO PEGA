@@ -1,0 +1,71 @@
+#include <Adafruit_BusIO_Register.h>
+#include <Adafruit_SSD1306.h>
+#include <Adafruit_GFX.h>
+
+Adafruit_SSD1306 display(128, 64);
+int senha = 0;
+#define botaoCIMA 3
+#define botaoBAIXO 2
+#define buzzer 1
+
+void setup() {
+    display.begin(SSD1306_SWITCHCAPVCC, 0X3C);
+    pinMode(buzzer, OUTPUT);
+    pinMode(botaoBAIXO, INPUT_PULLUP);
+    pinMode(botaoCIMA, INPUT_PULLUP);
+    display.setTextColor(1);
+}
+
+void loop() {
+    display.setCursor(18, 0);
+    display.setTextSize(1);
+    display.print("Proximo vagabundo");
+    /* Desenha um retângulo (x,y, w,h, arredondamento, cor), */
+    display.drawRoundRect(0, 10, 128, 47, 10, WHITE);
+    display.setCursor(20, 57);
+    display.print("Rob");
+    /* Imprime o caracter ASCII ó */
+    display.write(162);
+    display.print("tica Paran");
+    /* Imprime o caracter ASCII á */
+    display.write(160);
+    display.setCursor(15, 15);
+    display.setTextSize(2);
+    display.print("MegaSena");
+    display.setCursor(48, 35);
+    if (senha < 10) {
+        display.print(String("00") + senha);
+    }
+    if ((senha > 9) && (senha < 100)) {
+        display.print(String("0") + senha);
+    }
+    if (senha >99) {
+        display.print(senha);
+    }
+
+    if (digitalRead(botaoCIMA) == 0) {
+        senha += 1;
+        if (senha > 999) {
+            senha = 999;
+        }
+        tone(buzzer, 262, 250);
+        delay(250);
+        tone(buzzer, 2093, 400);
+        delay(400);
+    }
+
+    if (digitalRead(botaoBAIXO) == 0) {
+        senha += -1;
+        if (senha < 1) {
+            senha = 999;
+        }
+        tone(buzzer, 262, 250);
+        delay(250);
+        tone(buzzer, 1093, 400);
+        delay(400);
+    }
+    display.display();
+    display.clearDisplay();
+}
+
+/*INPUT_PULLUP, OUTPUT*/
