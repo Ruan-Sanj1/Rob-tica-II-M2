@@ -1,0 +1,113 @@
+#include <Servo.h>
+/* Definição das portas dos botões.*/
+#define btA 2
+#define btB 3
+#define btC 4
+#define btD 5                   */
+int potA0, potA1, incremento = 1;
+char escolha;
+
+/* Definindo o ângulo inicial dos servos.*/
+int angBase = 90;
+int angDir = 90;
+int angEsq = 90;
+int angGuarra = 90;
+
+/* Criando objetos de controle dos servos.*/
+Servo servo_9;
+Servo servo_10;
+Servo servo_11;
+Servo servo_12;
+
+void setup() {
+pinMode(btA, INPUT_PULLUP);
+pinMode(btB, INPUT_PULLUP);
+pinMode(btC, INPUT_PULLUP);
+pinMode(btD, INPUT_PULLUP);
+servo_9.attach();
+servo_10.attach();
+servo_11.attach();
+servo_12.attach();
+servo_9.write();
+servo_10.write();
+servo_11.write();
+servo_12.write();
+}
+
+void loop() {
+  /* Guarda os valores analógicos dos potenciômetros do joystick.*/
+  potA0 = analogRead();
+  potA1 = analogRead();
+  /* Se for pressionado o botão A.           */
+  if (digitalRead(btA) == 0) {
+    /* Defina a escolha como A.              */
+    escolha = 'A';
+  }
+
+  if (digitalRead(btB) == 0) {
+    escolha = 'B';
+  }
+
+  if (digitalRead(btC) == 0) {
+    escolha = 'C';
+  }
+
+  if (digitalRead(btD) == 0) {
+    escolha = 'D';
+  }
+
+  switch (escolha) {
+    case 'A':
+      if (potA0 > 700 && angGuarra < 100) {
+        servo_12.write(angGuarra);
+        angGuarra = angGuarra + incremento;
+        delay(50);
+      }
+      if (potA0 < 300 && angGuarra > 60) {
+        servo_12.write(angGuarra);
+        angGuarra = angGuarra - incremento;
+        delay(50);
+      }
+      break;
+
+    case 'B':
+      if (potA1 > 700 && angDir < 180) {
+        servo_10.write(angDir);
+        angDir = angDir + incremento;
+        delay(50);
+      }
+      if (potA1 < 300 && angDir > 50) {
+        servo_10.write(angDir);
+        angDir = angDir - incremento;
+        delay(50);
+      }
+      break;
+
+    case 'C':
+      if (potA0 < 300 && angBase < 180) {
+        servo_9.write(angBase);
+        angBase = angBase + incremento;
+        delay(50);
+      }
+      if (potA0 > 700 && angBase > 0) {
+        servo_9.write(angBase);
+        angBase = angBase - incremento;
+        delay(50);
+      }
+      break;
+
+    case 'D':
+      if (potA1 > 700 && angEsq < 180) {
+        servo_11.write(angEsq);
+        angEsq = angEsq + incremento;
+        delay(50);
+      }
+
+      if (potA1 < 300 && angEsq > 90) {
+        servo_11.write(angEsq);
+        angEsq = angEsq - incremento;
+        delay(50);
+      }
+      break;
+  }
+}
