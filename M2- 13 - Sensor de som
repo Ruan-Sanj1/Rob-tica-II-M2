@@ -1,0 +1,18 @@
+int pino_som = ;
+int pino_LED = ;
+
+boolean estado = LOW;
+
+void setup() {
+pinMode(pino_som, );
+pinMode(pino_LED, );
+}
+
+void loop() {
+   int som = digitalRead(pino_som);
+   if (som) {
+      estado = !estado;
+      digitalWrite(pino_LED, estado);
+      delay(300);
+   }
+}
