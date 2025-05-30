@@ -1,0 +1,72 @@
+#include <Servo.h>
+/* Cria os objetos para controlar os servos */
+Servo servo1;
+Servo servo2;
+
+int Servo1 = ;
+int Servo2 = ;
+int Botao_A = ;
+int Botao_B = ;
+int Botao_C = ;
+int Botao_D = ;
+int Botao_E = ;
+int Botao_F = ;
+int Botao_K = ;
+int LED_C = ;
+int LED_D = ;
+int LED_E = ;
+int LED_F = ;
+int Buzzer = ;
+int Pot_X = ;
+int Pot_Y = ;
+int LED_A = ;
+int LED_B = ;
+
+void setup() {
+servo1.attach(Servo1);
+servo2.attach(Servo2);
+for (int i = 2; i <= 8; i++) {
+   pinMode(i, INPUT_PULLUP);
+}
+for (int i = 9; i <= 13; i++) {
+   pinMode(i, OUTPUT);
+}
+pinMode(LED_A, OUTPUT);
+pinMode(LED_B, OUTPUT);
+}
+
+void loop() {
+servo1.write(map(analogRead(Pot_X), 0, 1023, 0, 180));
+servo2.write(map(analogRead(Pot_Y), 0, 1023, 0, 180));
+while (!digitalRead(Botao_A)){
+   digitalWrite(LED_A, HIGH);
+}
+while (!digitalRead(Botao_B)){
+   digitalWrite(LED_B, HIGH);
+}
+while (!digitalRead(Botao_C)){
+   digitalWrite(LED_C, HIGH);
+}
+while (!digitalRead(Botao_D)) {
+   digitalWrite(LED_D, HIGH);
+}
+while (!digitalRead(Botao_E)) {
+   digitalWrite(LED_E, HIGH);
+}
+while (!digitalRead(Botao_F)) {
+   digitalWrite(LED_F, HIGH);
+}
+while (!digitalRead(Botao_K)) {
+   tone(Buzzer, 800);
+}
+Off_LEDs();
+noTone(Buzzer);
+}
+
+void Off_LEDs() {
+for (int i = 9; i <= 12; i++) {
+   digitalWrite(i, LOW);
+}
+digitalWrite(LED_A, LOW);
+digitalWrite(LED_B, LOW);
+}
