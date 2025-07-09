@@ -1,0 +1,32 @@
+#define Sensor 
+#define LED_Verde 
+#define LED_Vermelho 
+
+int Valor_Critico = ;
+int ValorAnalogico;
+
+
+void setup() {
+    Serial.begin(9600);
+    pinMode(LED_Verde, OUTPUT);
+    pinMode(LED_Vermelho, OUTPUT);
+}
+
+void loop() {
+    ValorAnalogico = analogRead(Sensor);
+    int Porcento = map(ValorAnalogico, 1023, 0, , );
+    Serial.print(Porcento);
+    Serial.println("%");
+
+    if (Porcento <= Valor_Critico) {
+    Serial.println("");
+    digitalWrite(LED_Vermelho, HIGH);
+    digitalWrite(LED_Verde, LOW);
+    }
+    else {
+    Serial.println("");
+    digitalWrite(LED_Verde, HIGH);
+    digitalWrite(LED_Vermelho, LOW);
+    }
+    delay (1000);
+}
