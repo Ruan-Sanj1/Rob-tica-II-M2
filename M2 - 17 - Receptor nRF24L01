@@ -1,0 +1,44 @@
+/* Define a palavra esperada do transmissor como comando para acionar o LED.*/
+String mensagem_esperada = "pressionado";
+
+/* Inclui a biblioteca de controle do módulo nRF24L01.*/
+#include <RF24.h>
+
+/*Define o pino de controle do LED e comunicação*/
+#define pinoLED 2
+#define pinoCE 9
+#define pinoCSN 10
+
+/* Define o endereço de comunicação entre transmissor e receptor.*/
+#define endereco 5995
+/* Cria o objeto de controle do módulo rádio.*/     
+RF24 radio(pinoCE, pinoCSN);
+/* Variável que receberá a menssagem.*/            
+char msg_recebida[32] = "";
+
+void setup() {
+/*Inicia o monitor serial.*/
+Serial.begin(9600);
+pinMode(pinoLED, OUTPUT);
+/* Inicializa o módulo rádio.*/
+radio.begin();
+/* Abre canal de recebimento de dados no canal 0 (0-6).*/
+radio.openReadingPipe(0, endereco);
+/* Ativa o recebimento de dados.*/
+radio.startListening();
+}
+
+void loop() {
+/* Se receber dados do transmissor*/
+if (radio.available()) {
+   /* Lê os dados recebidos e armazena na variável msg_recebida.*/
+   radio.read(&msg_recebida, sizeof(msg_recebida));
+   /* Imprime no monitor serial a menssagem.*/
+   Serial.println(msg_recebida);
+   /* Se a menssagem recebida for igual a palavra pressionado*/
+   if (String(msg_recebida) == mensagem_esperada) {
+     /* Altere o estado lógico do LED (Ligado/Desligado).*/
+     digitalWrite(pinoLED, !digitalRead(pinoLED));
+   }
+}
+}
