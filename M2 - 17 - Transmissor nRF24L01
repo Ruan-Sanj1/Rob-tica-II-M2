@@ -1,0 +1,38 @@
+/* Declara a variável mensagem do tipo char para amazenar a palavra que será utilizada como comando para acionar o LED.*/
+char mensagem[] = "pressionado";
+
+/* Inclui a biblioteca de controle do módulo nRF24L01.*/
+#include <RF24.h>
+
+/*Define os pinos do botão e comunicação*/
+#define pinoBotao 2
+#define pinoCE 9
+#define pinoCSN 10
+
+/* Define o endereço de comunicação entre transmissor e receptor.*/
+#define endereco 5995
+/* Cria o objeto de controle do módulo rádio.*/
+RF24 radio(pinoCE, pinoCSN);
+
+void setup() {
+/* Configura o pino do botão como entrada ativando o  resistor interno.*/
+pinMode(pinoBotao, INPUT_PULLUP);
+
+/* Inicializa o módulo rádio.*/
+radio.begin();
+
+/* Abre canal de envio de dados.*/
+radio.openWritingPipe(endereco);
+/* Desativa o recebimento de dados, pois somente irá enviar.*/
+radio.stopListening();
+}
+
+void loop() {
+/* Se o botão for pressionado*/
+if (digitalRead(pinoBotao) == LOW) {
+   /* Envia a palavra para o receptor.               */
+   radio.write(&mensagem, sizeof(mensagem));
+   /* Intervalo para nova leitura do botão.          */
+   delay(400);
+}
+}
