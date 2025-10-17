@@ -1,0 +1,30 @@
+#include <IRremote.h>
+
+int Pino_receptor = ;
+
+void setup(){
+Serial.begin(9600);
+IrReceiver.begin(Pino_receptor);
+
+Serial.println("Pressione as teclas 1, 2, 3 e 4, nessa ordem, ");
+Serial.println("caso cometa algum erro, feche e abra novamente ");
+Serial.println("o monitor serial para reiniciar a operação.");
+Serial.println("");
+
+for (int tecla = 1; tecla <= 4; tecla++) {
+   while (!IrReceiver.decode()) {}
+   Serial.print("Código hexadecimal da tecla ");
+   Serial.print(tecla);
+   Serial.print(": ");
+   Serial.println(IrReceiver.decodedIRData.decodedRawData, HEX);
+   delay(600);
+   IrReceiver.resume();
+}
+
+Serial.println("");
+Serial.println("FIM...");
+Serial.println("Insira os valores no próximo código-fonte ");
+Serial.println("de programação.");
+}
+
+void loop () {}
