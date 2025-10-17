@@ -1,0 +1,50 @@
+#include <IRremote.h>
+int Pino_receptor = ;
+float armazenavalor;
+
+int Led_Vermelho = ;
+int Led_Azul = ;
+int Led_Verde = ;
+
+unsigned long tecla_1 = 0x;
+unsigned long tecla_2 = 0x;
+unsigned long tecla_3 = 0x;
+unsigned long tecla_4 = 0x;
+
+void setup(){
+IrReceiver.begin(Pino_receptor);
+pinMode(Led_Vermelho, OUTPUT);
+pinMode(Led_Verde, OUTPUT);
+pinMode(Led_Azul, OUTPUT);
+}
+
+void loop(){
+if (IrReceiver.decode()){
+   armazenavalor = IrReceiver.decodedIRData.decodedRawData;
+
+   if (armazenavalor == tecla_1){
+     digitalWrite(Led_Vermelho, );
+     digitalWrite(Led_Azul, );
+     digitalWrite(Led_Verde, );
+   }
+
+   if (armazenavalor == tecla_2){
+     digitalWrite(Led_Vermelho, );
+     digitalWrite(Led_Azul, );
+     digitalWrite(Led_Verde, );
+   }
+
+   if (armazenavalor == tecla_3){
+     digitalWrite(Led_Vermelho, );
+     digitalWrite(Led_Azul, );
+     digitalWrite(Led_Verde, );
+   }
+
+   if (armazenavalor == tecla_4){
+     digitalWrite(Led_Vermelho, );
+     digitalWrite(Led_Verde, );
+     digitalWrite(Led_Azul, );
+   }
+   IrReceiver.resume();
+}
+}
