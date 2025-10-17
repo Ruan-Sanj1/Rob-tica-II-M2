@@ -1,0 +1,60 @@
+/* Link para obtenção da biblioteca: https://github.com/nRF24/RF24/      */
+
+#define IDENTIFICADOR 1
+#include <RF24.h>
+
+#define PINO_CE 
+#define PINO_CSN 
+RF24 radio(,);
+
+String seunome = "";
+String MSG_digitada;
+/*32 caracteres*/
+char MSG_para_ENVIAR[32];
+char MSG_RECEBIDA[32];
+
+#if IDENTIFICADOR == 1
+/* ATENÇÃO: o endereço de transmissão deve ser igual*/
+const byte enderecoTransmissao[6] = "00001";
+const byte enderecoRecepcao[6] = "00002";
+#else
+const byte enderecoTransmissao[6] = "";
+const byte enderecoRecepcao[6] = "";
+#endif
+
+void setup() {
+Serial.begin(9600);
+radio.begin();
+radio.openWritingPipe(enderecoTransmissao);
+/* Canal de recepção (0 a 5) */
+radio.openReadingPipe( , enderecoRecepcao);
+
+/* RF24_PA_MIN; RF24_PA_LOW; RF24_PA_HIGH; RF24_PA_MAX*/
+radio.setPALevel(RF24_PA_MIN);
+radio.startListening();
+
+Serial.println("");
+while (seunome == "") {
+if ( Serial.available() ) {
+seunome = Serial.readStringUntil('\n');
+
+Serial.println("Bem-vindo, " + String(seunome) + "!");
+}
+}
+}
+
+void loop() {
+radio.startListening();
+if ( radio.available() ) {
+radio.read( &MSG_RECEBIDA, sizeof(MSG_RECEBIDA) );
+Serial.println(MSG_RECEBIDA);
+}
+
+if ( Serial.available() ) {
+radio.stopListening();
+MSG_digitada = "[" + seunome + "] " + Serial.readStringUntil('\n');
+Serial.println(MSG_digitada);
+MSG_digitada.toCharArray(MSG_para_ENVIAR, 32);
+radio.write( &MSG_para_ENVIAR, sizeof(MSG_para_ENVIAR) );
+}
+}
