@@ -101,3 +101,106 @@ break;
 }
 }
 }
+
+
+
+
+
+--------------------------------------------------------------MUSICAS.INO--------------------------------------------------------------------------
+/* Função para gerar uma nova sequência. */
+void gerarSequencia() {
+sequencia[tamanhoSequencia] = random(4); /* Gera um número aleatório entre 0 e 3.
+*/
+tamanhoSequencia++;
+Serial.print("Nível: ");
+Serial.println(tamanhoSequencia); /* Imprime o nível atual no monitor serial. */
+}
+
+
+
+
+
+--------------------------------------------------------------GERARSEQUENCIA.INO--------------------------------------------------------------------------
+  /* Função para tocar a música de abertura com animação de LEDs. */
+void tocarMusicaAbertura() {
+acenderLed(0);
+delay(300);
+apagarLeds();
+delay(100);
+acenderLed(1);
+delay(300);
+apagarLeds();
+delay(100);
+acenderLed(2);
+delay(300);
+apagarLeds();
+delay(100);
+acenderLed(3);
+delay(300);
+apagarLeds();
+delay(1000); /* Espera um segundo antes de iniciar a partida. */
+}
+/* Função para tocar a música de derrota com animação de LEDs. */
+void tocarMusicaDerrota() {
+int notas[] = {330, 294, 262, 196, 150, 130, 110, 98}; /* Sequên-
+cia das notas da derrota */
+int duracoes[] = {150, 150, 150, 150, 150, 150, 150, 600}; /* Du-
+ração de cada nota. */
+int leds[] = {2, 4, 6, 8}; /* Pinos dos LEDs. */
+int numLeds = sizeof(leds) / sizeof(leds[0]); /* Número de LEDs
+disponíveis. */
+for (int i = 0; i < 8; i++) {
+/* Tocar a nota. */
+tone(buzzer, notas[i]);
+/* Acender um LED aleatório. */
+int ledAleatorio = leds[random(numLeds)]; // Escolhe um LED
+aleatório
+digitalWrite(ledAleatorio, HIGH); // Acende o LED escolhido
+delay(duracoes[i]); /* Espera a duração da nota. */
+noTone(buzzer); /* Para o som da nota. */
+apagarLeds(); /* Apaga todos os LEDs. */
+delay(100); /* Pequena pausa entre as notas. */
+}
+delay(1000); /* Espera um segundo antes de permitir iniciar uma
+nova partida. */
+}
+
+
+
+
+--------------------------------------------------------------ACENDERLED.INO--------------------------------------------------------------------------
+/* Função com parâmetro para acender o LED correspondente e tocar a nota musical. */
+void acenderLed(int led) {
+switch (led) {
+case 0:
+digitalWrite(ledAmarelo, HIGH);
+tone(buzzer, notaAmarelo);
+break;
+case 1:
+digitalWrite(ledAzul, HIGH);
+tone(buzzer, notaAzul);
+break;
+case 2:
+digitalWrite(ledVerde, HIGH);
+tone(buzzer, notaVerde);
+break;
+case 3:
+digitalWrite(ledVermelho, HIGH);
+tone(buzzer, notaVermelho);
+break;
+}
+}
+
+
+
+
+
+--------------------------------------------------------------APAGARLEDS.INO--------------------------------------------------------------------------
+/* Função para apagar todos os LEDs e parar o som. */
+void apagarLeds() {
+digitalWrite(ledAmarelo, LOW);
+digitalWrite(ledAzul, LOW);
+digitalWrite(ledVerde, LOW);
+digitalWrite(ledVermelho, LOW);
+noTone(buzzer);
+}
