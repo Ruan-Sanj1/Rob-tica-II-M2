@@ -1,10 +1,9 @@
-/* Inclui o preâmbulo a partir da aba variaveis.h */
-#include "variaveis.h"
+#include ".h"
+
 void setup() {
-/* Chama a função que faz as configurações necessárias. */
 configurar();
 }
-/* Carrega o recorde da EEPROM. */
+
 EEPROM.get(enderecoRecorde, recorde);
 Serial.print("Recorde Atual: ");
 if (recorde < 0 || recorde > 100) {
@@ -12,44 +11,33 @@ Serial.println("0");
 } else {
 Serial.println(recorde);
 }
-/* Espera pelo jogador para iniciar a partida. */
 esperarNovoJogo();
+
+void loop() {
+}
 
 
 --------------------------------------------------------------VARIÁVEIS.H--------------------------------------------------------------------------
-  /* Biblioteca que permitirá a gravação de dados na memória eeprom
-do Arduino. */
 #include <EEPROM.h>
-/* Definição dos pinos dos LEDs. */
-#define ledAmarelo 10
-#define ledAzul 8
-#define ledVerde 6
-#define ledVermelho 4
-/* Definição dos pinos dos botões. */
-#define botaoAmarelo 11
-#define botaoAzul 9
-#define botaoVerde 7
-#define botaoVermelho 5
-/* Definição do pino do buzzer. */
-#define buzzer 2
-/* Notas musicais correspondentes aos LEDs. */
+
+#define ledAmarelo 
+#define ledAzul 
+#define ledVerde 
+#define ledVermelho 
+#define botaoAmarelo 
+#define botaoAzul 
+#define botaoVerde 
+#define botaoVermelho 
+#define buzzer 
 #define notaAmarelo 262 /* Dó */
 #define notaAzul 294 /* Ré */
 #define notaVerde 330 /* Mi */
 #define notaVermelho 349 /* Fá */
-/* Tempo que o LED fica aceso em milissegundos. */
 #define tempoLedAceso 300
-/* Endereço na EEPROM para armazenar o recorde (0 a 1023). */
 #define enderecoRecorde 0
-/* Variável para armazenar o recorde. */
-int recorde = 0;
-/* Array para armazenar a sequência gerada pelo jogo. */
-/* O tamanho do array é 100, o que significa que ele pode armazenar
-até 100 elementos. */
+
+int recorde = ;
 int sequencia[100];
-/* Variável para controlar o tamanho atual da sequência gerada. */
-/* Indica quantos elementos da sequência foram gerados e devem ser
-reproduzidos pelo jogador. */
 int tamanhoSequencia = 0;
 
 
@@ -57,24 +45,15 @@ int tamanhoSequencia = 0;
 
 --------------------------------------------------------------CONFIGURAR.INO--------------------------------------------------------------------------
 void configurar() {
-/* Configuração dos pinos dos LEDs como saída. */
 pinMode(ledAmarelo, OUTPUT);
 pinMode(ledAzul, OUTPUT);
 pinMode(ledVerde, OUTPUT);
 pinMode(ledVermelho, OUTPUT);
-/* Configuração dos pinos dos botões como entrada pull-up. */
 pinMode(botaoAmarelo, INPUT_PULLUP);
 pinMode(botaoAzul, INPUT_PULLUP);
 pinMode(botaoVerde, INPUT_PULLUP);
 pinMode(botaoVermelho, INPUT_PULLUP);
-/* Inicialização da comunicação serial para debug. */
 Serial.begin(9600);
-/* Inicializa o gerador de números aleatórios. A função lê, pelo analogRead(0)
-como parâmetro, o valor do pino analógico do Arduino. Esse pino não está conectado em
-nada específico, então ele faz a coleta de valores aleatórios entre 0 e 1023 porque a porta
-fica em um estado flutuante, o que gera números aleatórios com um valor diferente toda
-vez que o programa é iniciado, garantindo assim que as sequências geradas para nosso
-Genius sejam diferentes a cada jogada. */
 randomSeed(analogRead(0));
 }
 
@@ -82,21 +61,18 @@ randomSeed(analogRead(0));
 
 
 --------------------------------------------------------------ESPERARNOVOJOGO.INO--------------------------------------------------------------------------
-/* Função para esperar até que um botão seja pressionado para iniciar um novo jogo. */
 void esperarNovoJogo() {
-/* Mensagem aguardando a ação do jogador para iniciar uma partida. */
 Serial.println(“Pressione qualquer botão para iniciar...”);
-/* Cria uma espera “infinita” por um botão. */
+
 while (true) {
-/* Verifica se um dos 4 botões foi pressionado. */
 if (digitalRead(botaoAmarelo) == LOW || digitalRead(botaoAzul) == LOW || digitalRea-
 d(botaoVerde) == LOW || digitalRead(botaoVermelho) == LOW) {
-/* Aguarda o botão pressionado ser solto. */
+
 while (digitalRead(botaoAmarelo) == LOW || digitalRead(botaoAzul) == LOW || digi-
 talRead(botaoVerde) == LOW || digitalRead(botaoVermelho) == LOW) {};
-tamanhoSequencia = 0; /* Reinicia o tamanho da sequência. */
-gerarSequencia(); /* Gera uma nova sequência. */
-tocarMusicaAbertura(); /* Toca a música de abertura com animação de LEDs. */
+tamanhoSequencia = 0; 
+gerarSequencia(); 
+tocarMusicaAbertura(); 
 break;
 }
 }
@@ -106,22 +82,19 @@ break;
 
 
 
---------------------------------------------------------------MUSICAS.INO--------------------------------------------------------------------------
-/* Função para gerar uma nova sequência. */
+--------------------------------------------------------------GERARSEQUENCIA.INO--------------------------------------------------------------------------
 void gerarSequencia() {
-sequencia[tamanhoSequencia] = random(4); /* Gera um número aleatório entre 0 e 3.
-*/
+sequencia[tamanhoSequencia] = random(4);
 tamanhoSequencia++;
 Serial.print("Nível: ");
-Serial.println(tamanhoSequencia); /* Imprime o nível atual no monitor serial. */
+Serial.println(tamanhoSequencia);
 }
 
 
 
 
 
---------------------------------------------------------------GERARSEQUENCIA.INO--------------------------------------------------------------------------
-  /* Função para tocar a música de abertura com animação de LEDs. */
+---------------------------------------------------------------MUSICAS.INO-------------------------------------------------------------------------
 void tocarMusicaAbertura() {
 acenderLed(0);
 delay(300);
@@ -138,55 +111,49 @@ delay(100);
 acenderLed(3);
 delay(300);
 apagarLeds();
-delay(1000); /* Espera um segundo antes de iniciar a partida. */
+delay(1000); 
 }
-/* Função para tocar a música de derrota com animação de LEDs. */
+
 void tocarMusicaDerrota() {
-int notas[] = {330, 294, 262, 196, 150, 130, 110, 98}; /* Sequên-
-cia das notas da derrota */
-int duracoes[] = {150, 150, 150, 150, 150, 150, 150, 600}; /* Du-
-ração de cada nota. */
-int leds[] = {2, 4, 6, 8}; /* Pinos dos LEDs. */
-int numLeds = sizeof(leds) / sizeof(leds[0]); /* Número de LEDs
-disponíveis. */
+int notas[] = {330, 294, 262, 196, 150, 130, 110, 98};
+int duracoes[] = {150, 150, 150, 150, 150, 150, 150, 600}; 
+int leds[] = {2, 4, 6, 8}; 
+int numLeds = sizeof(leds) / sizeof(leds[0]); 
+
 for (int i = 0; i < 8; i++) {
-/* Tocar a nota. */
 tone(buzzer, notas[i]);
-/* Acender um LED aleatório. */
-int ledAleatorio = leds[random(numLeds)]; // Escolhe um LED
-aleatório
-digitalWrite(ledAleatorio, HIGH); // Acende o LED escolhido
-delay(duracoes[i]); /* Espera a duração da nota. */
-noTone(buzzer); /* Para o som da nota. */
-apagarLeds(); /* Apaga todos os LEDs. */
-delay(100); /* Pequena pausa entre as notas. */
+int ledAleatorio = leds[random(numLeds)]; 
+digitalWrite(ledAleatorio, HIGH); 
+delay(duracoes[i]); 
+noTone(buzzer); 
+apagarLeds();
+delay(100); 
 }
-delay(1000); /* Espera um segundo antes de permitir iniciar uma
-nova partida. */
+delay(1000); 
 }
 
 
 
 
 --------------------------------------------------------------ACENDERLED.INO--------------------------------------------------------------------------
-/* Função com parâmetro para acender o LED correspondente e tocar a nota musical. */
+
 void acenderLed(int led) {
 switch (led) {
 case 0:
-digitalWrite(ledAmarelo, HIGH);
-tone(buzzer, notaAmarelo);
+digitalWrite(, HIGH);
+tone(buzzer, );
 break;
 case 1:
-digitalWrite(ledAzul, HIGH);
-tone(buzzer, notaAzul);
+digitalWrite(, HIGH);
+tone(buzzer, );
 break;
 case 2:
-digitalWrite(ledVerde, HIGH);
-tone(buzzer, notaVerde);
+digitalWrite(, HIGH);
+tone(buzzer, );
 break;
 case 3:
-digitalWrite(ledVermelho, HIGH);
-tone(buzzer, notaVermelho);
+digitalWrite(, HIGH);
+tone(buzzer, );
 break;
 }
 }
@@ -196,11 +163,107 @@ break;
 
 
 --------------------------------------------------------------APAGARLEDS.INO--------------------------------------------------------------------------
-/* Função para apagar todos os LEDs e parar o som. */
 void apagarLeds() {
 digitalWrite(ledAmarelo, LOW);
 digitalWrite(ledAzul, LOW);
 digitalWrite(ledVerde, LOW);
 digitalWrite(ledVermelho, LOW);
 noTone(buzzer);
+}
+
+
+
+
+
+--------------------------------------------------------------MOSTRARSEQUENCIA.INO--------------------------------------------------------------------------
+void mostrarSequencia() {
+for (int i = 0; i < tamanhoSequencia; i++) {
+acenderLed(sequencia[i]);
+delay(tempoLedAceso);
+apagarLeds();
+delay(tempoLedAceso);
+}
+}
+
+
+
+
+--------------------------------------------------------------VERIFICARENTRADAJOGADOR.INO--------------------------------------------------------------------------
+bool verificarEntradaJogador() {
+for (int i = 0; i < tamanhoSequencia; i++) {
+int botaoPressionado = esperarBotaoPressionado();
+if (botaoPressionado != sequencia[i]) {
+return false;
+}
+}
+return true;
+}
+
+
+
+
+
+--------------------------------------------------------------ESPERARBOTAOPRESSIONADO.INO--------------------------------------------------------------------------
+int esperarBotaoPressionado() {
+while (true) {
+if (digitalRead(botaoAmarelo) == LOW) {
+acenderLed(0);
+delay(tempoLedAceso);
+apagarLeds();
+while (digitalRead(botaoAmarelo) == LOW) {};
+return 0;
+}
+if (digitalRead(botaoAzul) == LOW) {
+acenderLed(1);
+delay(tempoLedAceso);
+apagarLeds();
+while (digitalRead(botaoAzul) == LOW) {};
+return 1;
+}
+if (digitalRead(botaoVerde) == LOW) {
+acenderLed(2);
+delay(tempoLedAceso);
+apagarLeds();
+while (digitalRead(botaoVerde) == LOW) {}; 
+return 2;
+}
+if (digitalRead(botaoVermelho) == LOW) {
+acenderLed(3);
+delay(tempoLedAceso); 
+apagarLeds();
+while (digitalRead(botaoVermelho) == LOW) {}; 
+return 3;
+}
+}
+}
+
+
+
+
+
+
+--------------------------------------------------------------FINALIZACAO--------------------------------------------------------------------------
+void loop() {
+mostrarSequencia(); 
+
+if (verificarEntradaJogador()) { 
+Serial.println("");
+delay(1000);
+gerarSequencia();
+} else {
+Serial.println("");
+tocarMusicaDerrota();
+
+
+if (tamanhoSequencia - 1 > recorde) {
+recorde = tamanhoSequencia - 1; 
+EEPROM.put(enderecoRecorde, recorde);
+Serial.print("");
+Serial.println(recorde);
+} else {
+Serial.print("");
+Serial.println(recorde);
+}
+esperarNovoJogo();
+}
 }
