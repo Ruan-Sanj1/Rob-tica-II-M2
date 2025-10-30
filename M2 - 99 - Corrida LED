@@ -1,0 +1,175 @@
+/* ____                     _      ______ _____    _____
+  / __ \                   | |    |  ____|  __ \  |  __ \               
+ | |  | |_ __   ___ _ __   | |    | |__  | |  | | | |__) |__ _  ___ ___ 
+ | |  | | '_ \ / _ \ '_ \  | |    |  __| | |  | | |  _  // _` |/ __/ _ \
+ | |__| | |_) |  __/ | | | | |____| |____| |__| | | | \ \ (_| | (_|  __/
+  \____/| .__/ \___|_| |_| |______|______|_____/  |_|  \_\__,_|\___\___|
+        | |                                                             
+        |_|          
+Open LED Race, uma corrida de carro minimalista para fitas LED!
+Este é um programa gratuito e você pode distribuir e/ou modificá-lo pelos
+termos GNU Gerneral Public License (Licença Pública Geral), publicado pela
+Free Software Foundation (Fundação de Software Gratuitos), e
+também pela versão 3 da Licença, ou qualquer versão recente.
+por gbarbarov@singulardevices.com para Arduino day Seville 2019
+https://www.hackster.io/gbarbarov/open-led-race-a0331a
+https://twitter.com/openledrace
+
+Próximos melhoramentos em:
+https://gitlab.com/open-led-race
+https://openledrace.net/open-software/
+Traduzido e adaptado*/
+
+/* Inclui o preâmbulo no sketch. */
+#include “preambulo.h”
+void setup() {
+/* Inicia o objeto da fita de LEDs. */
+pista.begin();
+/* Definimos o brilho máximo dos LEDs. (0 a 255). */
+pista.setBrightness(BRILHO_MAX);
+/* Iniciamos com todos os LEDs desligados. */
+pista.clear();
+/* Aplica as modificações acima. */
+pista.show();
+/* Configurações das portas dos botões como INPUT_PULLUP. */
+pinMode(PIN_P1, INPUT_PULLUP);
+pinMode(PIN_P2, INPUT_PULLUP);
+/* Inicia com o valor de gravidade nula para todos os LEDs (127). O mapa varia de 0 a 255.
+mapa_gravidade[i] = 127 (Aceleração da gravidade nula - Superfície plana)
+mapa_gravidade[i] > 127 (Aceleração da gravidade positiva - Descendo a rampa)
+mapa_gravidade[i] < 127 (Aceleração da gravidade negativa - Subindo a rampa) */
+for (int i = 0; i < N_LEDs; i++) {
+mapa_gravidade[i] = 127;
+}
+/* Chama a função de início da corrida. */
+iniciar_corrida();
+}
+
+
+
+------------------------------------------PREAMBULO.H------------------------------------------
+#include <Adafruit_NeoPixel.h>
+/*Define o número máximo de LEDs da pista. */
+#define maxLEDs 300
+int N_LEDs = MAX_LEDs;
+/* Define o máximo brilho dos LEDs (0 a 255). */
+#define BRILHO_MAX 60
+/* Definição das portas utilizadas. */
+#define PIN_LED 2
+#define PIN_P1 4
+#define PIN_P2 3
+#define PIN_AUDIO 13
+
+/* Define as cores dos players. */
+// 1 - Vermelho
+// 2 - Verde
+// 3 - Azul
+// 4 - Amarelo (Vermelho + Verde)
+// 5 - Ciano (Verde + Azul)
+// 6 - Magenta (Vermelho + Azul)
+int Cor_P1 = 1; // Vermelho
+int Cor_P2 = 2; // Verde
+
+/* Matriz que irá armazenar as informações de gravidade ao longo da pista.*/
+byte mapa_gravidade[MAX_LEDs];
+
+/* Variáveis de controle para os competidores. */
+float velocidade1 = 0; /* Velocidade do carro 1. */
+float velocidade2 = 0; /* Velocidade do carro 2. */
+float dist1 = 0;/* Distância percorrida pelo carro 1 (medida em LEDs). */
+float dist2 = 0;/* Distância percorrida pelo carro 2 (medida em LEDs). */
+byte n_voltas_P1 = 0; /* Contagem do número de voltas do carro 1. */
+byte n_voltas_P2 = 0; /* Contagem do número de voltas do carro 2. */
+byte n_max_voltas = 5;/* Total de voltas da corrida. */
+
+float ACELERACAO = 0.2; /* Aceleração dos carros. */
+float kf = 0.015; /* Constante de atrito. */
+float kg = 0.003; /* Constante de gravidade. */
+byte flag_botao1 = 0; /* Flag de controle do botão P1. */
+byte flag_botao2 = 0; /* Flag de controle do botão P2. */
+int controle_bip; /* Controle dos bips ao completar cada volta. */
+
+/* Variável para controlar a ordem que os carros serão exibidos quando so-
+brepostos. */
+byte ordem_desenho = 0;
+/* Variáveis utilizadas para controlar o tempo que cada carro será exibido quando sobreposto. */
+unsigned long tempoAtual = 0;
+unsigned long ultimaAlteracao = 0;
+int tempo_delay = 5; /* Pequena pausa entre cada atualização.*/
+/* Cria um objeto de controle para a fita de LEDs. */
+Adafruit_NeoPixel pista(MAX_LEDs, PIN_LED);
+
+
+
+
+
+------------------------------------------INICIARCORRIDA.INO------------------------------------------
+/* Função para iniciar uma corrida. */
+void iniciar_corrida() {
+/* Somente inicia após pressionar o botão P1. */
+while (digitalRead(PIN_P1) == 1) {}
+/* Verifica se a corrida foi iniciada com o botão P2 
+pressionado, então criará a(s) rampa(s) abaixo. */
+if (digitalRead(PIN_P2) == 0) {
+/* Criar rampas. */
+/* rampa(Altura, Inicio_Subida, Topo, Final_Descida) */
+rampa(12, 13, 17, 22);
+/* Cada unidade de medida representa um LED*/
+/*Criando uma segunda rampa na fita com 300 LEDs. */
+//rampa(8, 150, 180, 200);
+}
+}
+
+/*------------------------------------------Parte 2------------------------------------------*/
+/* Animação da largada. */
+/* Liga dois LEDs Vermelhos. */
+pista.setPixelColor(12, pista.Color(255, 0, 0));
+pista.setPixelColor(11, pista.Color(255, 0, 0));
+pista.show();
+/* Toca um bip de 400Hz por 2 segundos. */
+tone(PIN_AUDIO, 400);
+delay(2000);
+noTone(PIN_AUDIO);
+/* Desliga os dois LEDs Vermelhos e liga dois LEDs Amarelos. */
+pista.setPixelColor(12, pista.Color(0, 0, 0));
+pista.setPixelColor(11, pista.Color(0, 0, 0));
+pista.setPixelColor(10, pista.Color(255, 255, 0));
+pista.setPixelColor(9, pista.Color(255, 255, 0));
+pista.show();
+/* Toca um bip de 600Hz por 2 segundos. */
+tone(PIN_AUDIO, 600);
+delay(2000);
+noTone(PIN_AUDIO);
+/* Desliga os dois LEDs Amarelos e liga dois LEDs verdes. */
+pista.setPixelColor(9, pista.Color(0, 0, 0));
+pista.setPixelColor(10, pista.Color(0, 0, 0));
+pista.setPixelColor(8, pista.Color(0, 255, 0));
+pista.setPixelColor(7, pista.Color(0, 255, 0));
+pista.show();
+/* Toca um bip de 1200Hz por 2 segundos. */
+tone(PIN_AUDIO, 1200);
+delay(2000);
+noTone(PIN_AUDIO);
+/* Desliga os dois LEDs verdes. */
+pista.setPixelColor(8, pista.Color(0, 0, 0));
+pista.setPixelColor(7, pista.Color(0, 0, 0));
+pista.show();
+}
+
+
+
+------------------------------------------CRIARRAMPA.INO------------------------------------------
+/* Função que cria uma rampa recebendo 4 parâmetros (H, a, b, c). */
+void rampa(byte H, byte a, byte b, byte c) {
+/* Utiliza a relação trigonométrica para criar o mapa de gravidade da subida. */
+for (int i = 0; i < (b - a); i++) {
+mapa_gravidade[a + i] = 127 - i * ((float)H / (b - a));
+}
+/* Define a gravidade nula (127) no topo da rampa. */
+mapa_gravidade[b] = 127;
+/* Utiliza a relação trigonométrica para criar o mapa de gravidade da descida. */
+for (int i = 0; i < (c - b); i++) {
+mapa_gravidade[b + i + 1] = 127 + H - i * ((float)H / (c - b));
+}
+}
+
