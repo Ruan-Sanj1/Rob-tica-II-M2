@@ -1,0 +1,27 @@
+Versão 1:-----------------------------------------------------------------------------------------------------------
+void setup (){
+pinMode(9, OUTPUT);
+}
+
+Void loop(){
+digitalWrite(9, HIGH);
+delay(1000);
+digitalWrite(9, LOW);
+delay(1000);
+}
+
+
+Versão 2:-----------------------------------------------------------------------------------------------------------
+int LED=
+int TEMPO=
+
+void setup (){
+pinMode(LED, OUTPUT);
+}
+
+Void loop(){
+digitalWrite(LED, HIGH);
+delay(TEMPO);
+digitalWrite(LED, LOW);
+delay(TEMPO);
+}
