@@ -1,0 +1,54 @@
+#define LED_Vermelho_1 
+#define LED_Amarelo_1 
+#define LED_Verde_1 
+
+#define LED_Vermelho_2 
+#define LED_Amarelo_2 
+#define LED_Verde_2 
+
+void setup() {
+pinMode(LED_Vermelho_1, );
+pinMode(LED_Amarelo_1, );
+pinMode(LED_Verde_1, );
+pinMode(LED_Vermelho_2, );
+pinMode(LED_Amarelo_2, );
+pinMode(LED_Verde_2, );
+}
+
+void loop() {
+/* Primeiro estágio:*/
+digitalWrite(LED_Vermelho_1, LOW);
+digitalWrite(LED_Amarelo_1, LOW);
+digitalWrite(LED_Verde_1, HIGH);
+digitalWrite(LED_Vermelho_2, );
+digitalWrite(LED_Amarelo_2, );
+digitalWrite(LED_Verde_2, );
+delay(5000);
+
+/* Segundo estágio:*/
+digitalWrite(LED_Vermelho_1, LOW);
+digitalWrite(LED_Amarelo_1, HIGH);
+digitalWrite(LED_Verde_1, LOW);
+digitalWrite(LED_Vermelho_2, );
+digitalWrite(LED_Amarelo_2, );
+digitalWrite(LED_Verde_2, );
+delay(3000);
+
+/* Terceiro estágio:*/
+digitalWrite(LED_Vermelho_1, HIGH);
+digitalWrite(LED_Amarelo_1, LOW);
+digitalWrite(LED_Verde_1, LOW);
+digitalWrite(LED_Vermelho_2, );
+digitalWrite(LED_Amarelo_2, );
+digitalWrite(LED_Verde_2, );
+delay(5000);
+
+/* Quarto estágio:*/
+digitalWrite(LED_Vermelho_1, HIGH);
+digitalWrite(LED_Amarelo_1, LOW);
+digitalWrite(LED_Verde_1, LOW);
+digitalWrite(LED_Vermelho_2, );
+digitalWrite(LED_Amarelo_2, );
+digitalWrite(LED_Verde_2, );
+delay(3000);
+}
