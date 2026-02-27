@@ -1,0 +1,26 @@
+#define LED_Vermelho 
+#define LED_Amarelo 
+#define LED_Verde 
+
+void setup() {
+pinMode(LED_Vermelho, );
+pinMode(LED_Amarelo, ); 
+pinMode(LED_Verde, );
+}
+
+void loop() { 
+digitalWrite(LED_Vermelho, LOW);
+digitalWrite(LED_Amarelo, LOW);
+digitalWrite(LED_Verde, HIGH);
+delay();
+
+digitalWrite(LED_Vermelho, LOW);
+digitalWrite(LED_Amarelo, HIGH);
+digitalWrite(LED_Verde, LOW);
+delay();
+
+digitalWrite(LED_Vermelho, HIGH);
+digitalWrite(LED_Amarelo, LOW);
+digitalWrite(LED_Verde, LOW);
+delay();
+}
