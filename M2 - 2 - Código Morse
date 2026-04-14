@@ -5,8 +5,9 @@ int LED =
 void setup(){
 pinMode();
 pinMode();
-}
 pinMode();
+}
+
 
 void loop(){
 if (digitalRead() ==) {
