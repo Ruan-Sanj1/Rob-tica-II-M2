@@ -1,0 +1,40 @@
+#include <Ultrasonic.h>
+
+int pino_buzzer = ;
+int pino_Emi = ;
+int pino_Eco = ;
+
+Ultrasonic Sensor(pino_Emi, pino_Eco);
+int distancia;
+#define frequencia 3500
+
+void setup() {
+pinMode(pino_buzzer, OUTPUT);
+}
+
+void loop() {
+distancia = Sensor.read();
+if (distancia < 80 && distancia > 50) {
+ tone(pino_buzzer, frequencia, 100);
+ delay(1000);
+}
+
+if (distancia < 50 && distancia > 30) {
+ tone(pino_buzzer, frequencia, 100);
+ delay();
+}
+
+if (distancia < 30 && distancia > 20) {
+ tone(pino_buzzer, frequencia, 100);
+ delay();
+}
+
+if (distancia < 20 && distancia > 10) {
+ tone(pino_buzzer, frequencia, 100);
+ delay();
+}
+
+if (distancia < 10) {
+ tone(pino_buzzer, frequencia);
+}
+}
