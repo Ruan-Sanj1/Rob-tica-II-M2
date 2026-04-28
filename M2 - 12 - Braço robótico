@@ -8,10 +8,10 @@ int potA0, potA1, incremento = 1;
 char escolha;
 
 /* Definindo o ângulo inicial dos servos.*/
-int angBase = 90;
-int angDir = 90;
-int angEsq = 90;
-int angGuarra = 90;
+int angBase = ;
+int angDir = ;
+int angEsq = ;
+int angGuarra = ;
 
 /* Criando objetos de controle dos servos.*/
 Servo servo_9;
@@ -58,12 +58,12 @@ void loop() {
 
   switch (escolha) {
     case 'A':
-      if (potA0 > 700 && angGuarra < 100) {
+      if (potA0 > 700 && angGuarra < ) {
         servo_12.write(angGuarra);
         angGuarra = angGuarra + incremento;
         delay(50);
       }
-      if (potA0 < 300 && angGuarra > 60) {
+      if (potA0 < 300 && angGuarra > ) {
         servo_12.write(angGuarra);
         angGuarra = angGuarra - incremento;
         delay(50);
@@ -71,12 +71,12 @@ void loop() {
       break;
 
     case 'B':
-      if (potA1 > 700 && angDir < 180) {
+      if (potA1 > 700 && angDir < ) {
         servo_10.write(angDir);
         angDir = angDir + incremento;
         delay(50);
       }
-      if (potA1 < 300 && angDir > 50) {
+      if (potA1 < 300 && angDir > ) {
         servo_10.write(angDir);
         angDir = angDir - incremento;
         delay(50);
@@ -84,12 +84,12 @@ void loop() {
       break;
 
     case 'C':
-      if (potA0 < 300 && angBase < 180) {
+      if (potA0 < 300 && angBase < ) {
         servo_9.write(angBase);
         angBase = angBase + incremento;
         delay(50);
       }
-      if (potA0 > 700 && angBase > 0) {
+      if (potA0 > 700 && angBase > ) {
         servo_9.write(angBase);
         angBase = angBase - incremento;
         delay(50);
@@ -97,13 +97,13 @@ void loop() {
       break;
 
     case 'D':
-      if (potA1 > 700 && angEsq < 180) {
+      if (potA1 > 700 && angEsq < ) {
         servo_11.write(angEsq);
         angEsq = angEsq + incremento;
         delay(50);
       }
 
-      if (potA1 < 300 && angEsq > 90) {
+      if (potA1 < 300 && angEsq > ) {
         servo_11.write(angEsq);
         angEsq = angEsq - incremento;
         delay(50);
