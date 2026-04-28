@@ -7,12 +7,12 @@
 #define LED_Verde_2 
 
 void setup() {
-pinMode(LED_Vermelho_1, );
-pinMode(LED_Amarelo_1, );
-pinMode(LED_Verde_1, );
-pinMode(LED_Vermelho_2, );
-pinMode(LED_Amarelo_2, );
-pinMode(LED_Verde_2, );
+pinMode(LED_Vermelho_1, OUTPUT);
+pinMode(LED_Amarelo_1, OUTPUT);
+pinMode(LED_Verde_1, OUTPUT);
+pinMode(LED_Vermelho_2, OUTPUT);
+pinMode(LED_Amarelo_2, OUTPUT);
+pinMode(LED_Verde_2, OUTPUT);
 }
 
 void loop() {
