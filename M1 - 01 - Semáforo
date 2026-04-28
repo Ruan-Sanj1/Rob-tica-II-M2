@@ -3,9 +3,9 @@
 #define LED_Verde 
 
 void setup() {
-pinMode(LED_Vermelho, );
-pinMode(LED_Amarelo, ); 
-pinMode(LED_Verde, );
+pinMode(LED_Vermelho, OUTPUT);
+pinMode(LED_Amarelo, OUTPUT); 
+pinMode(LED_Verde, OUTPUT);
 }
 
 void loop() { 
