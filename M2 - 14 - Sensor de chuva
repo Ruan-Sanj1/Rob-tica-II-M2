@@ -14,7 +14,7 @@ void setup() {
     pinMode(Pin_Sensor, INPUT);
     /* Loop para definir os pinos 2 ao 10 como saídas; */
     for (int i = 2; i <= 10; i++) {
-        pinMode(i, OUTPUT);
+        pinMode(i, );
     }
 }
 
