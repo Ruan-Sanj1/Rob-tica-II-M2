@@ -1,7 +1,5 @@
 #include <Servo.h>
-
 Servo meuservo;
-
 int Pino_Servo = 
 
 void setup() {
@@ -25,8 +23,8 @@ delay();
 
 Servo Servo1;
 
-int servoPin = 9;
-int potPin = A0;
+int servoPin = ;
+int potPin = ;
 
 void setup() {
   Servo1.attach(servoPin);
