@@ -1,0 +1,39 @@
+#include <Servo.h>
+
+Servo meuservo;
+
+int Pino_Servo = 
+
+void setup() {
+meuservo.attach(Pino_Servo);
+}
+
+void loop() {
+meuservo.write();
+delay();
+
+meuservo.write();
+delay();
+
+meuservo.write();
+delay();
+}
+
+
+-------------------------POTENCIOMETRO------------------------------
+#include <Servo.h>
+
+Servo Servo1;
+
+int servoPin = 9;
+int potPin = A0;
+
+void setup() {
+  Servo1.attach(servoPin);
+}
+
+void loop() {
+  int reading = analogRead(potPin);
+  int angle = map(reading, 0, 1023, 0, 180);
+  Servo1.write(angle);
+}
