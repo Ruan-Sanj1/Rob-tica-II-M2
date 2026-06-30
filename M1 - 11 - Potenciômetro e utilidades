@@ -1,0 +1,30 @@
+int potenciometro = 0;
+
+ void setup() {
+Serial.begin(9600);
+}
+
+ void loop() {
+potenciometro = analogRead();
+Serial.println(potenciometro);
+delay();
+} 
+
+-------------------------------------------------------------------
+
+
+#include <Servo.h>
+Servo servo1;
+
+int Pino_Servo1 = ;
+int Pot = ;
+
+
+void setup() {
+servo1.attach(Pino_Servo1);
+}
+
+void loop() {
+servo1.write(map(analogRead(Pot), 0, 1023, 0, 180));
+delay(15);
+}
