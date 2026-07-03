@@ -1,0 +1,57 @@
+/* ATENÇÃO! */
+/* Nas linhas 7 ou 8 deste código, você deverá informar*/
+/* se o LED RGB utilizado é ânodo comum ou cátodo */
+/* comum para o correto funcionamento deste protótipo */
+/* descomentando a linha correspondente ao seu LED RGB. */
+
+// char modelo[] = “Ânodo Comum”;
+// char modelo[] = “Cátodo Comum”;
+
+int Pin_pot = ;
+int Pot = ;
+int Led_R = ;
+int Led_G = ;
+int Led_B = ;
+
+int ligar;
+int desligar;
+
+void setup() {
+ pinMode(Led_R, );
+ pinMode(Led_G, );
+ pinMode(Led_B, );
+
+ if (modelo[0] != 'C') {
+ ligar = 0;
+ desligar = 1;
+ } else {
+ ligar = 1;
+ desligar = 0;
+ }
+
+ digitalWrite(Led_R, );
+ digitalWrite(Led_G, );
+ digitalWrite(Led_B, );
+}
+
+void loop() {
+ Pot = analogRead(Pin_pot);
+
+ if (Pot >=  && Pot <= ) {
+ digitalWrite(Led_R, );
+ } else {
+ digitalWrite(Led_R, );
+ }
+
+ if (Pot >=  && Pot <= ) {
+ digitalWrite(Led_G, );
+ } else {
+ digitalWrite(Led_G, );
+ }
+
+ if (Pot >=  && Pot <= ) {
+ digitalWrite(Led_B, );
+ } else {
+ digitalWrite(Led_B, );
+ }
+}
