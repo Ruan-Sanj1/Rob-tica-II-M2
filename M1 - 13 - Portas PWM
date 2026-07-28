@@ -1,0 +1,26 @@
+int pinoLed = 
+int intensidade = ; /* Defina o brilho do LED (0-255). */
+
+void setup() {
+pinMode(pinoLed, OUTPUT);
+}
+
+void loop() {
+analogWrite(pinoLed, intensidade);
+}
+
+---------------------------Fade-In/Fade-out--------------------------------
+int pinoLed = 
+int incremento = 
+int brilho = 
+
+void setup() {
+pinMode(pinoLed, OUTPUT); 
+}
+
+void loop() {
+for (brilho; brilho XX 000; brilho YY incremento) {
+ analogWrite(pinoLed, brilho);
+ delay(100);
+}
+}
