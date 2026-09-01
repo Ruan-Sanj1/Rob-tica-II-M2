@@ -17,9 +17,9 @@ int ligar;
 int desligar;
 
 void setup() {
- pinMode(Led_R, );
- pinMode(Led_G, );
- pinMode(Led_B, );
+ pinMode(Led_R, OUTPUT);
+ pinMode(Led_G, OUTPUT);
+ pinMode(Led_B, OUTPUT);
 
  if (modelo[0] != 'C') {
  ligar = 0;
@@ -29,29 +29,29 @@ void setup() {
  desligar = 0;
  }
 
- digitalWrite(Led_R, );
- digitalWrite(Led_G, );
- digitalWrite(Led_B, );
+ digitalWrite(Led_R, desligar);
+ digitalWrite(Led_G, desligar);
+ digitalWrite(Led_B, desligar);
 }
 
 void loop() {
  Pot = analogRead(Pin_pot);
 
- if (Pot >=  && Pot <= ) {
- digitalWrite(Led_R, );
+ if (Pot >= 0 && Pot <= 341) {
+ digitalWrite(Led_R, ligar);
  } else {
- digitalWrite(Led_R, );
+ digitalWrite(Led_R, desligar);
  }
 
- if (Pot >=  && Pot <= ) {
- digitalWrite(Led_G, );
+ if (Pot >= 342 && Pot <= 682) {
+ digitalWrite(Led_G, ligar);
  } else {
- digitalWrite(Led_G, );
+ digitalWrite(Led_G, desligar);
  }
 
- if (Pot >=  && Pot <= ) {
- digitalWrite(Led_B, );
+ if (Pot >= 683 && Pot <= 1023) {
+ digitalWrite(Led_B, ligar);
  } else {
- digitalWrite(Led_B, );
+ digitalWrite(Led_B, desligar);
  }
 }
