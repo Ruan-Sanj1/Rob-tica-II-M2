@@ -18,8 +18,8 @@ char MSG_RECEBIDA[32];
 const byte enderecoTransmissao[6] = "00001";
 const byte enderecoRecepcao[6] = "00002";
 #else
-const byte enderecoTransmissao[6] = "";
-const byte enderecoRecepcao[6] = "";
+const byte enderecoTransmissao[6] = "00002";
+const byte enderecoRecepcao[6] = "00001";
 #endif
 
 void setup() {
@@ -27,7 +27,7 @@ Serial.begin(9600);
 radio.begin();
 radio.openWritingPipe(enderecoTransmissao);
 /* Canal de recepção (0 a 5) */
-radio.openReadingPipe( , enderecoRecepcao);
+radio.openReadingPipe(1 , enderecoRecepcao);
 
 /* RF24_PA_MIN; RF24_PA_LOW; RF24_PA_HIGH; RF24_PA_MAX*/
 radio.setPALevel(RF24_PA_MIN);
