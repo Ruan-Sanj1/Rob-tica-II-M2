@@ -1,0 +1,96 @@
+const int Pinos_LED[] = {}; 
+const int numLeds = ;
+const int Pino_Pot = ; 
+
+void setup() {
+  for (int i = 0; i < numLeds; i++) {
+    pinMode(Pinos_LED[i], OUTPUT);
+  }
+}
+
+void loop() {
+  int Valor_Sensor = analogRead(Pino_Pot);
+  
+  int ledLevel = map(Valor_Sensor, 0, 1023, 0, numLeds); 
+
+  for (int i = 0; i < numLeds; i++) {
+    if (i < ledLevel) {
+      digitalWrite(Pinos_LED[i], HIGH); 
+    } else {
+      digitalWrite(Pinos_LED[i], LOW);
+    }
+  }
+}
+
+
+------------------------Barra de vida com botões---------------------------------
+const int pinoBotaoMais = ;
+const int pinoBotaoMenos = ;
+const int primeiroPinoLED = ;
+const int ultimoPinoLED = ;
+const int totalLEDs = ;
+
+int nivelAtual = 0;
+
+bool estadoBotaoMaisAntigo = HIGH;
+bool estadoBotaoMenosAntigo = HIGH;
+
+void setup() {
+  for (int i = primeiroPinoLED; i <= ultimoPinoLED; i++) {
+    pinMode(i, OUTPUT);
+  }
+
+  pinMode(pinoBotaoMais, INPUT_PULLUP);
+  pinMode(pinoBotaoMenos, INPUT_PULLUP);
+  inicializarAnimacao();
+  atualizarBarra();
+}
+
+void loop() {
+  bool estadoBotaoMais = digitalRead(pinoBotaoMais);
+  if (estadoBotaoMais == LOW && estadoBotaoMaisAntigo == HIGH) {
+    if (nivelAtual < totalLEDs) {
+      nivelAtual++;
+      atualizarBarra();
+    }
+    delay(50); 
+  }
+  estadoBotaoMaisAntigo = estadoBotaoMais;
+
+  bool estadoBotaoMenos = digitalRead(pinoBotaoMenos);
+  if (estadoBotaoMenos == LOW && estadoBotaoMenosAntigo == HIGH) {
+    if (nivelAtual > 0) {
+      nivelAtual--;
+      atualizarBarra();
+    }
+    delay(50); 
+  }
+  estadoBotaoMenosAntigo = estadoBotaoMenos;
+}
+
+void atualizarBarra() {
+  for (int i = 0; i < totalLEDs; i++) {
+    if (i < nivelAtual) {
+      digitalWrite(primeiroPinoLED + i, HIGH);
+    } else {
+      digitalWrite(primeiroPinoLED + i, LOW);
+    }
+  }
+}
+
+void inicializarAnimacao() {
+  int tempoEspera = 60; 
+
+  for (int i = 0; i < totalLEDs; i++) {
+    digitalWrite(primeiroPinoLED + i, HIGH);
+    delay(tempoEspera);
+  }
+  
+  delay(200); 
+
+  for (int i = totalLEDs - 1; i >= 0; i--) {
+    digitalWrite(primeiroPinoLED + i, LOW);
+    delay(tempoEspera);
+  }
+  delay(200);
+}
